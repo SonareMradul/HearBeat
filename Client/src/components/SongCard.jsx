@@ -2,8 +2,9 @@ import { Play, ListPlus } from "lucide-react";
 import { usePlayer } from "../context/PlayerContext";
 import api from "../services/api";
 import { useEffect, useState } from "react";
-
-const MEDIA_URL = import.meta.env.VITE_MEDIA_URL || "http://localhost:5000";
+const MEDIA_URL = (
+  import.meta.env.VITE_API_URL || "http://localhost:5000/api"
+).replace(/\/api\/?$/, "");
 
 export default function SongCard({ song }) {
   const { playSong, addToQueue } = usePlayer();
@@ -30,6 +31,7 @@ export default function SongCard({ song }) {
       alert(error.response?.data?.message || "Failed to add song");
     }
   };
+  const cover = `${MEDIA_URL}/uploads/covers/${encodeURIComponent(song.coverImage)}`;
 
   const MEDIA_URL = (
   import.meta.env.VITE_API_URL || "http://localhost:5000/api"
@@ -38,7 +40,11 @@ export default function SongCard({ song }) {
   return (
     <article className="group rounded-3xl border border-zinc-800 bg-zinc-900/40 overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:border-zinc-700">
       <button type="button" onClick={() => playSong(song)} className="block w-full text-left overflow-hidden">
-        <img src={MEDIA_URL} alt={song.title} className="aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+      <img
+  src={cover}
+  alt={song.title}
+  className="aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105"
+/>
       </button>
 
       <div className="p-5">
