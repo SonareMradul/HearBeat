@@ -10,8 +10,15 @@ import Login from "./pages/Login";
 import Pricing from "./pages/Pricing";
 import Account from "./pages/Account";
 import Register from "./pages/Register";
+import { useState } from "react";
+import SplashScreen from "./components/SplashScreen";
 
 function App() {
+   const [loading, setLoading] = useState(true);
+
+  if (loading) {
+    return <SplashScreen onFinish={() => setLoading(false)} />;
+  }
   return (
     <BrowserRouter>
       <Routes>
